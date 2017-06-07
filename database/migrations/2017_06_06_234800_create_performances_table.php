@@ -15,10 +15,10 @@ class CreatePerformancesTable extends Migration
     {
         Schema::create('performances', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('');
-            $table->string('');
-            $table->string('');
-            $table->string('');
+            $table->string('performance_title');
+            $table->string('performance_description');
+            $table->string('video');
+            $table->string('images');
             $table->integer('created_by');
             $table->timestamps();
         });
