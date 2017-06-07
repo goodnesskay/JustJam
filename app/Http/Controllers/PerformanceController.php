@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Performance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PerformanceController extends Controller
 {
@@ -13,7 +15,7 @@ class PerformanceController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboaard.new-performance',['users'=>Auth::User()]);
     }
 
     /**
@@ -24,7 +26,24 @@ class PerformanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'performance_title'=>'required',
+            'performance_description'=>'required|min:100',
+            'images'=>'',
+            'videos'=>''
+        ]);
+
+        $performances =  new Performance();
+        $performances->performance_title = $request->input('performance_title');
+        $performances->performance_description = $request->input('performance_description');
+        $performances->created_by = Auth::User()->id;
+
+        if ($performances->save())
+        {
+            return redirect()->back()->with('alert','Kudos! You have added '.$performances->performance_title.' to your performances');
+        }else{
+            return redirect()->back()->withErrors($validator);
+        }
     }
 
     /**
@@ -69,6 +88,12 @@ class PerformanceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $performances = Specialty::find($id);
+        if ($performances->destroy())
+        {
+            return redirect()->back()->with('alert','Hello! You just deleted '.$performances->specialty_name.' from your list of specialties');
+        }else{
+            return redirect()->back()->with('alert','An error occurred due to poor network');
+        }
     }
 }
