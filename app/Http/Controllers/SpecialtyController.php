@@ -16,7 +16,7 @@ class SpecialtyController extends Controller
      */
     public function create()
     {
-        return view('dashboaard.new-specialty',['users'=>Auth::User()]);
+        return view('dashboard.new-specialty',['users'=>Auth::User()]);
     }
 
     /**

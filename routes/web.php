@@ -18,7 +18,70 @@ Route::group(['middleware' => ['web']], function () {
 
     Auth::routes();
 
-    Route::get('/home', 'HomeController@index')->name('home');
+    //Dashboard
+    Route::get('/home',[
+        'uses'=>'HomeController@index',
+        'as'=>'home',
+        'middleware'=>'auth'
+    ]);
+
+    /**
+     *  Profile
+    */
+    Route::get('edit-profile/{id}/{name}',[
+        'uses'=>'UserController@edit',
+        'as'=>'edit-profile',
+        'middleware'=>'auth'
+    ]);
+
+    Route::post('edit-profile/{id}/{name}',[
+        'uses'=>'UserController@update',
+        'as'=>'edit-profile',
+        'middleware'=>'auth'
+    ]);
+
+    /**
+     *  Password
+     */
+    Route::get('reset-password/{id}/{name}',[
+        'uses'=>'UserController@passwordView',
+        'as'=>'reset-password',
+        'middleware'=>'auth'
+    ]);
+
+    Route::post('reset-password/{id}/{name}',[
+        'uses'=>'UserController@changePassword',
+        'as'=>'reset-password',
+        'middleware'=>'auth'
+    ]);
+
+    /**
+     *  Specialty
+     */
+    Route::get('my-specialties',[
+        'uses'=>'SpecialtyController@show',
+        'as'=>'my-specialties',
+        'middleware'=>'auth'
+    ]);
+
+    /**
+     *  Performances
+     */
+    Route::get('my-performances',[
+        'uses'=>'PerformanceController@show',
+        'as'=>'my-performances',
+        'middleware'=>'auth'
+    ]);
+
+    /**
+     *  Search
+     */
+    Route::get('find-music-pal',[
+        'uses'=>'SearchController@searchView',
+        'as'=>'find-music-pal',
+        'middleware'=>'auth'
+    ]);
+
 });
 
 

@@ -28,7 +28,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('dashboard.profile',['users',Auth::User()])->with('user',$user);
+        return view('dashboard.edit-profile',['users',Auth::User()])->with('user',$user);
     }
 
     /**
@@ -73,6 +73,37 @@ class UserController extends Controller
         $users->linkedin_url =$request->input('linkedin_url');
         $users->youtube_url =$request->input('youtube_url');
 
+        if ($users->save())
+        {
+            return redirect()->back()->with('alert','Changes have been made to our data');
+        }else{
+            return redirect()->back()->withErrors($validator);
+        }
+    }
+
+    /**
+     *  Password Reset View
+     *
+    */
+    public function passwordView($id)
+    {
+        $user = User::find($id);
+        return view('dashboard.password-reset',['users',Auth::User()])->with('user',$user);
+
+    }
+
+    /**
+     *  Password Reset
+     *
+     */
+    public function changePassword(Request $request,$id)
+    {
+        $this->validate($request,[
+            'password'=>'required|confirmed|min:6'
+        ]);
+
+        $users = User::find($id);
+        $users->password = $request->input('password');
         if ($users->save())
         {
             return redirect()->back()->with('alert','Changes have been made to our data');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Performance;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,7 @@ class PerformanceController extends Controller
      */
     public function create()
     {
-        return view('dashboaard.new-performance',['users'=>Auth::User()]);
+        return view('dashboard.new-performance',['users'=>Auth::User()]);
     }
 
     /**
@@ -52,9 +53,10 @@ class PerformanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $performances = DB::table('performances')->select('*')->where('created_by','==',Auth::User()->id)->paginate(10);
+        return view('dashboard.my-performances',['users', Auth::User()])->with('performances',$performances);
     }
 
     /**

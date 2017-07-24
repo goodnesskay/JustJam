@@ -7,7 +7,7 @@
                 <div class="splash-container sign-up">
                     <div class="panel panel-default panel-border-color panel-border-color-primary">
                         <div class="panel-heading">
-                            <a href="{{ url('/') }}"><img src="dashboard/img/logo-xx.png" alt="logo" width="102" height="27" class="logo-img"></a>
+                            <a href="{{ url('/') }}"><img src="{{ asset('dashboard/assets/img/logo-xx.png') }}" alt="logo" width="102" height="27" class="logo-img"></a>
                             <span class="splash-description">Please register on our platform to enjoy our services.</span>
                         </div>
                         <div class="panel-body">
@@ -38,15 +38,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group row signup-password">
-                                    <div class="col-xs-6 {{ $errors->has('mobile_number') ? ' has-error' : '' }}">
-                                        <input name="mobile_number" placeholder="Mobile Number" class="form-control">
-                                        @if ($errors->has('mobile_number'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('mobile_number') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                    <div class="col-xs-6 {{ $errors->has('password') ? ' has-error' : '' }}">
+                                    <div class="col-xs-12 {{ $errors->has('password') ? ' has-error' : '' }}">
                                         <input id="password" name="password" placeholder="Password" type="password" class="form-control">
                                         @if ($errors->has('password'))
                                             <span class="help-block">
